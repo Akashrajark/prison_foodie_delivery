@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_button.dart';
-import 'package:prison_foodie_delivey/common_widgets/custom_image_picker.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_text_form_field.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
-  TextEditingController placeController = TextEditingController();
-  TextEditingController vehicleNoController = TextEditingController();
-  TextEditingController districtController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController pincodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 15),
               Text(
-                'Delivery Partner - Login',
+                'Delivery Partner - Signup',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                   color: tertiaryColor,
@@ -61,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               CustomTextFormField(
                   labelText: 'Email',
                   controller: emailController,
@@ -72,18 +66,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passController,
                   validator: null),
               const SizedBox(height: 10),
-              const SizedBox(height: 20),
+              CustomTextFormField(
+                  labelText: 'Username',
+                  controller: usernameController,
+                  validator: null),
+              const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 height: 60,
                 child: CustomButton(
-                    color: secondaryColor, label: 'Login', onPressed: () {}),
+                    color: secondaryColor, label: 'Continue', onPressed: () {}),
               ),
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Create Account | Signup',
+                  'Already Account | Login',
                   textAlign: TextAlign.right,
                   style: GoogleFonts.poppins(
                     color: tertiaryColor,

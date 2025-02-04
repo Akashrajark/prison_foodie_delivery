@@ -11,16 +11,16 @@ const Color cardBorderColor = Color(0xFFD8D8D8);
 const Color cardFocusBorderColor = Color.fromARGB(255, 203, 203, 203);
 const Color iconColor = Color(0xFF566273);
 // Primary color (Blue): Used for key interactive elements like buttons, links, and selected states
-const primaryColor = Color(0xFF347AE2);
+const primaryColor = Color(0xFFD8204C);
 
 // Secondary color (Gray): Used for secondary UI elements like labels, icons, and borders
 const secondaryColor = Color(0xFFFFFFFF);
 
 // Tertiary color (Gray): Used for less important UI elements like disabled states or subtle details
-const tertiaryColor = Color(0xFFF0F0F0);
+const tertiaryColor = Color(0xFF000000);
 
 // Accent color (Yellow): Used to high important information like warnings, success messages, or interactive elements
-const accentColor = Color(0xFFFFD700);
+const accentColor = Color.fromARGB(255, 106, 255, 0);
 
 // Surface color (White): Used for cards, containers, and other elevated UI elements
 const surfaceColor = Color(0xFFFFFFFF);
@@ -36,7 +36,7 @@ const onSecondaryColor =
 const onTertiaryColor =
     Color(0xFFFFFFFF); // Text color used on tertiary (gray) color background
 const onSurfaceColor =
-    Color(0xFF7A7A7A); // Text color used on surface (white) color
+    Color(0xFFD9D9D9); // Text color used on surface (white) color
 const onErrorColor =
     Color(0xFFFFFFFF); // Text color used on error (red) color background
 

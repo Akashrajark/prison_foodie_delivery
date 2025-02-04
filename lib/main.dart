@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prison_foodie_delivey/features/home/home_screen.dart';
+
+import 'package:prison_foodie_delivey/features/signup/signup_second_screen.dart';
+
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
 void main() {
@@ -12,9 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: const HomeScreen(),
+      home: const SignupSecondScreen(),
     );
   }
 }

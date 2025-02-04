@@ -46,7 +46,7 @@ class _CustomButtonState extends State<CustomButton> {
             blurRadius: !_hovering ? 0 : 2,
           ),
         ],
-        color: widget.inverse ? widget.backGroundColor : Colors.white,
+        color: widget.inverse ? primaryColor : widget.backGroundColor,
         border: widget.inverse
             ? null
             : Border.all(
