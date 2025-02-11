@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_button.dart';
-import 'package:prison_foodie_delivey/common_widgets/custom_image_picker.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_text_form_field.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
