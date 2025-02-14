@@ -5,6 +5,8 @@ import 'package:prison_foodie_delivey/features/profile/profile_screen.dart';
 import 'package:prison_foodie_delivey/features/wallet/wallet_screen.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
+import '../../common_widgets/custom_cupertin_switch.dart';
+
 class CustomBottomNavBarScreen extends StatefulWidget {
   const CustomBottomNavBarScreen({super.key});
 
@@ -28,41 +30,48 @@ class _CustomBottomNavBarScreenState extends State<CustomBottomNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: pages[selectedindex],
-          bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: primaryColor,
-              fixedColor: secondaryColor,
-              onTap: onItemTapped,
-              currentIndex: selectedindex,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.moped,
-                      size: 30,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.work_history,
-                      size: 30,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.account_balance_wallet,
-                      size: 30,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.account_circle,
-                      size: 30,
-                    ),
-                    label: ''),
-              ])),
+    return Scaffold(
+      appBar: AppBar(actions: [
+        CustomCupertinoSwitch(
+          value: false,
+          onChanged: (value) {},
+        ),
+      ]),
+      body: SafeArea(child: pages[selectedindex]),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: primaryColor,
+        fixedColor: secondaryColor,
+        onTap: onItemTapped,
+        currentIndex: selectedindex,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.moped,
+                size: 30,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.work_history,
+                size: 30,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_balance_wallet,
+                size: 30,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+              size: 30,
+            ),
+            label: '',
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_item_list.dart';
-import 'package:prison_foodie_delivey/common_widgets/custom_user_detail_card.dart';
+import 'package:prison_foodie_delivey/common_widgets/custom_order_card.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
 class ReachDropScreen extends StatelessWidget {
@@ -118,17 +118,18 @@ class ReachDropScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           children: const [
             SizedBox(height: 20),
-            CustomUserDetailCard(
-              children: [
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-                CustomItemList(),
-              ],
+            CustomOrderCard(
+              orderDetails: {},
+              // children: [
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              //   CustomItemList(),
+              // ],
             ),
             SizedBox(height: 90), // Adds spacing to prevent overlap
           ],

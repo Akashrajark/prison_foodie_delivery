@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
+import 'package:prison_foodie_delivey/util/format_function.dart';
 
 class CustomItemList extends StatelessWidget {
-  const CustomItemList({super.key});
+  final Map<String, dynamic> orderItemDetails;
+  const CustomItemList({super.key, required this.orderItemDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,8 @@ class CustomItemList extends StatelessWidget {
                 width: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        'http://poojascookery.com/wp-content/uploads/2016/02/DSC3432-min.jpg'),
+                  image: DecorationImage(
+                    image: NetworkImage(orderItemDetails['image_url']),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -32,18 +33,18 @@ class CustomItemList extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                'Chapati',
+                formatValue(orderItemDetails['food_name']),
                 style: GoogleFonts.poppins(
-                  color: tertiaryColor,
+                  color: onSecondaryColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               const Spacer(),
               Text(
-                '1x',
+                '${formatValue(orderItemDetails['order_count'])}x',
                 style: GoogleFonts.poppins(
-                  color: tertiaryColor,
+                  color: onSecondaryColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_item_list.dart';
-import 'package:prison_foodie_delivey/common_widgets/custom_user_detail_card.dart';
+import 'package:prison_foodie_delivey/common_widgets/custom_order_card.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 
 class OrderDeliveredScreen extends StatelessWidget {
@@ -32,18 +32,19 @@ class OrderDeliveredScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              CustomUserDetailCard(
-                children: [
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                  CustomItemList(),
-                ],
-              )
+              CustomOrderCard(
+                orderDetails: {},
+                // children: [
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                //   CustomItemList(),
+                // ],
+              ),
             ],
           )),
     );
