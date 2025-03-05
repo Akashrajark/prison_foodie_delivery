@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:prison_foodie_delivey/common_widgets/custom_button.dart';
 import 'package:prison_foodie_delivey/common_widgets/custom_item_list.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../util/format_function.dart';
 
@@ -16,9 +19,11 @@ class PickupOrderScreen extends StatefulWidget {
 class _PickupOrderScreenState extends State<PickupOrderScreen> {
   List _orderItems = [];
 
+  bool _isLoading = false;
+
   @override
   void initState() {
-    _orderItems = widget.orderDetails['order_items'];
+    _orderItems = widget.orderDetails['items'];
     super.initState();
   }
 
@@ -44,7 +49,7 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '#${formatValue(widget.orderDetails['order_id'])}',
+                            '#${formatValue(widget.orderDetails['id'])}',
                             style: GoogleFonts.poppins(
                               color: onSecondaryColor,
                               fontSize: 14,
@@ -52,7 +57,7 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                             ),
                           ),
                           Text(
-                            'Total: ${formatValue(widget.orderDetails['order_price'])}',
+                            'Total: ${formatValue(widget.orderDetails['price'])}',
                             style: GoogleFonts.poppins(
                               color: onSecondaryColor,
                               fontSize: 14,
@@ -75,7 +80,7 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '#${formatValue(widget.orderDetails['user_name'])}',
+                                  '#${formatValue(widget.orderDetails['user']['user_name'])}',
                                   style: GoogleFonts.poppins(
                                     color: onSecondaryColor,
                                     fontSize: 18,
@@ -83,7 +88,7 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                                   ),
                                 ), //TODO:address also backend(rpc)
                                 Text(
-                                  'Address: Framroz Court, Ds Phalekar Road, Above Saraswat Bank, Dadar (East)',
+                                  '${formatValue(widget.orderDetails['address']['address_line'])}, ${formatValue(widget.orderDetails['address']['place'])}, ${formatValue(widget.orderDetails['address']['district'])}, ${formatValue(widget.orderDetails['address']['state'])}, ${formatValue(widget.orderDetails['address']['pincode'])}',
                                   style: GoogleFonts.poppins(
                                     color: onSecondaryColor,
                                     fontSize: 12,
@@ -112,7 +117,7 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'Pickup ${formatValue(widget.orderDetails['order_item_count'])} items',
+                                  'Pickup ${formatValue(widget.orderDetails['items'].length)} items',
                                   style: GoogleFonts.poppins(
                                     color: onSecondaryColor,
                                     fontSize: 12,
@@ -122,16 +127,16 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
                               ],
                             ),
                           ),
-                          //TODO:amount driver recive
-                          Text(
-                            'Payment method: Online paid',
-                            textAlign: TextAlign.right,
-                            style: GoogleFonts.poppins(
-                              color: onSecondaryColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          // //TODO:amount driver recive
+                          // Text(
+                          //   'Payment method: Online paid',
+                          //   textAlign: TextAlign.right,
+                          //   style: GoogleFonts.poppins(
+                          //     color: onSecondaryColor,
+                          //     fontSize: 12,
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -155,20 +160,46 @@ class _PickupOrderScreenState extends State<PickupOrderScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Material(
-        color: primaryColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          child: Text(
-            textAlign: TextAlign.center,
-            'Pickup Order',
-            style: GoogleFonts.poppins(
-              color: secondaryColor,
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-            ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomButton(
+            label: 'Open Maps',
+            isLoading: _isLoading,
+            color: Colors.white,
+            onPressed: () async {
+              final latitude = widget.orderDetails['address']['latitude'];
+              final longitude = widget.orderDetails['address']['longitude'];
+              final googleMapsUrl =
+                  'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+              if (await canLaunch(googleMapsUrl)) {
+                await launch(googleMapsUrl);
+              } else {
+                throw 'Could not open the map.';
+              }
+            },
           ),
-        ),
+          const SizedBox(height: 10),
+          CustomButton(
+            label: 'Delivered',
+            isLoading: _isLoading,
+            color: Colors.white,
+            onPressed: () async {
+              _isLoading = true;
+              setState(() {});
+
+              await Supabase.instance.client.from('orders').update(
+                {'status': 'Completed'},
+              ).eq('id', widget.orderDetails['id']);
+
+              Navigator.pop(context);
+
+              _isLoading = false;
+              setState(() {});
+            },
+          ),
+        ],
       ),
     );
   }

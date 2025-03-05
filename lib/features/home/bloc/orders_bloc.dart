@@ -17,28 +17,34 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         SupabaseQueryBuilder table = supabaseClient.from('orders');
 
         if (event is GetAllOrdersEvent) {
+          // List<Map<String, dynamic>> orders = [];
+
+          // if (event.params['status'] == 'Pending') {
+          //   orders = await supabaseClient.rpc('get_pending_orders');
+          // }
+          // if (event.params['status'] == 'Completed') {
+          //   orders = await supabaseClient.rpc('get_completed_orders');
+          // }
+
+          PostgrestFilterBuilder<
+              List<
+                  Map<String, dynamic>>> query = table.select(
+              '*, items:order_item(*, food:food_items(*)), address(*), user:users(*)');
+
+          if (event.params['status'] == 'Pending') {
+            query = query.eq('status', 'Pending');
+          }
+
+          if (event.params['query'] != null) {
+            query = query.ilike('name', '%${event.params['query']}%');
+          }
+
+          if (event.params['status'] == 'Completed') {
+            query = query.eq('status', event.params['status']);
+          }
+
           List<Map<String, dynamic>> orders =
-              await supabaseClient.rpc('get_pending_orders');
-
-          // PostgrestFilterBuilder<
-          //     List<
-          //         Map<String, dynamic>>> query = table.select(
-          //     '*, items:order_item(*, food:food_items(*)), item_count:count(*)');
-
-          // if (event.params['status'] == null) {
-          //   query = query.eq('status', 'Pending');
-          // }
-
-          // if (event.params['query'] != null) {
-          //   query = query.ilike('name', '%${event.params['query']}%');
-          // }
-
-          // if (event.params['status'] == 'Complete') {
-          //   query = query.eq('status', event.params['status']);
-          // }
-
-          // List<Map<String, dynamic>> orders =
-          //     await query.order('id', ascending: true);
+              await query.order('id', ascending: true);
 
           emit(OrdersGetSuccessState(orders: orders));
         }

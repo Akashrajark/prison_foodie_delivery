@@ -6,9 +6,11 @@ import 'package:prison_foodie_delivey/util/format_function.dart';
 
 class CustomOrderCard extends StatelessWidget {
   final Map<String, dynamic> orderDetails;
+  final Function()? onBack;
   const CustomOrderCard({
     super.key,
     required this.orderDetails,
+    this.onBack,
   });
 
   @override
@@ -17,8 +19,8 @@ class CustomOrderCard extends StatelessWidget {
       color: secondaryColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PickupOrderScreen(
@@ -26,6 +28,8 @@ class CustomOrderCard extends StatelessWidget {
               ),
             ),
           );
+
+          onBack?.call();
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -35,7 +39,7 @@ class CustomOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '#${formatValue(orderDetails['order_id'])}',
+                    '#${formatValue(orderDetails['id'])}',
                     style: GoogleFonts.poppins(
                       color: onSecondaryColor,
                       fontSize: 14,
@@ -43,7 +47,7 @@ class CustomOrderCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Total: ${formatValue(orderDetails['order_price'])}',
+                    'Total: ${formatValue(orderDetails['price'])}',
                     style: GoogleFonts.poppins(
                       color: onSecondaryColor,
                       fontSize: 14,
@@ -66,7 +70,7 @@ class CustomOrderCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '#${formatValue(orderDetails['user_name'])}',
+                          '#${formatValue(orderDetails['user']['user_name'])}',
                           style: GoogleFonts.poppins(
                             color: onSecondaryColor,
                             fontSize: 18,
@@ -74,7 +78,7 @@ class CustomOrderCard extends StatelessWidget {
                           ),
                         ), //TODO:address also backend(rpc)
                         Text(
-                          'Address: Framroz Court, Ds Phalekar Road, Above Saraswat Bank, Dadar (East)',
+                          '${formatValue(orderDetails['address']['address_line'])}, ${formatValue(orderDetails['address']['place'])}, ${formatValue(orderDetails['address']['district'])}, ${formatValue(orderDetails['address']['state'])}, ${formatValue(orderDetails['address']['pincode'])}',
                           style: GoogleFonts.poppins(
                             color: onSecondaryColor,
                             fontSize: 12,
@@ -103,7 +107,7 @@ class CustomOrderCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Pickup ${formatValue(orderDetails['order_item_count'])} items',
+                          'Pickup ${formatValue(orderDetails['items'].length)} item(s)',
                           style: GoogleFonts.poppins(
                             color: onSecondaryColor,
                             fontSize: 12,
@@ -115,7 +119,7 @@ class CustomOrderCard extends StatelessWidget {
                   ),
                   //TODO:amount driver recive
                   Text(
-                    'Payment method: Online paid',
+                    'DETAILS',
                     textAlign: TextAlign.right,
                     style: GoogleFonts.poppins(
                       color: onSecondaryColor,

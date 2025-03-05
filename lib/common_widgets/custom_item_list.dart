@@ -24,7 +24,7 @@ class CustomItemList extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: NetworkImage(orderItemDetails['image_url']),
+                    image: NetworkImage(orderItemDetails['food']['image_url']),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -33,7 +33,7 @@ class CustomItemList extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                formatValue(orderItemDetails['food_name']),
+                formatValue(orderItemDetails['food']['name']),
                 style: GoogleFonts.poppins(
                   color: onSecondaryColor,
                   fontSize: 14,
@@ -42,7 +42,7 @@ class CustomItemList extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${formatValue(orderItemDetails['order_count'])}x',
+                '${formatValue(orderItemDetails['count'])}x',
                 style: GoogleFonts.poppins(
                   color: onSecondaryColor,
                   fontSize: 14,

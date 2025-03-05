@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Map<String, dynamic> params = {
     'query': null,
-    'status': null,
+    'status': 'Pending',
   };
 
   List<Map<String, dynamic>> _orders = [];
@@ -73,6 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             itemBuilder: (context, index) => CustomOrderCard(
               orderDetails: _orders[index],
+              onBack: () {
+                getOrders();
+              },
             ),
             separatorBuilder: (context, index) => const Divider(),
             itemCount: _orders.length,

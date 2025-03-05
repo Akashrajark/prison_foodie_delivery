@@ -20,7 +20,7 @@ class _CustomBottomNavBarScreenState extends State<CustomBottomNavBarScreen> {
   List pages = [
     const HomeScreen(),
     const HistoryScreen(),
-    const WalletScreen(),
+    // const WalletScreen(),
     const ProfileScreen()
   ];
   void onItemTapped(int index) {
@@ -31,11 +31,11 @@ class _CustomBottomNavBarScreenState extends State<CustomBottomNavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
-        CustomCupertinoSwitch(
-          value: false,
-          onChanged: (value) {},
-        ),
+      appBar: AppBar(title: Text('Prison Foodie Deliveries'), actions: [
+        // CustomCupertinoSwitch(
+        //   value: false,
+        //   onChanged: (value) {},
+        // ),
       ]),
       body: SafeArea(child: pages[selectedindex]),
       bottomNavigationBar: BottomNavigationBar(
@@ -57,12 +57,12 @@ class _CustomBottomNavBarScreenState extends State<CustomBottomNavBarScreen> {
                 size: 30,
               ),
               label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance_wallet,
-                size: 30,
-              ),
-              label: ''),
+          // BottomNavigationBarItem(
+          //     icon: Icon(
+          //       Icons.account_balance_wallet,
+          //       size: 30,
+          //     ),
+          //     label: ''),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.account_circle,
