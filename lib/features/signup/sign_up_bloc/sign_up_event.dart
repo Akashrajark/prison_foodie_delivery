@@ -5,11 +5,17 @@ sealed class SignUpEvent {}
 
 class SignUpUserEvent extends SignUpEvent {
   final String email, password;
-  final Map userDetails;
 
   SignUpUserEvent({
     required this.email,
     required this.password,
+  });
+}
+
+class InsertUserDataEvent extends SignUpEvent {
+  final Map userDetails;
+
+  InsertUserDataEvent({
     required this.userDetails,
   });
 }

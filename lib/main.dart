@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prison_foodie_delivey/features/bottom_nav_bar/custom_bottom_nav_bar.dart';
+import 'package:prison_foodie_delivey/features/signin/signin_screen.dart';
 import 'package:prison_foodie_delivey/theme/app_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: const CustomBottomNavBarScreen(),
+      home: const SigninScreen(),
     );
   }
 }

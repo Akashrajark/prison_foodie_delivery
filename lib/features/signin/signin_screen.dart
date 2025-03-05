@@ -126,7 +126,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           Text(
                             'SIGN IN',
                             style: GoogleFonts.poppins(
-                              color: onTertiaryColor,
+                              color: onSecondaryColor,
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                             ),
@@ -175,7 +175,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             child: CustomButton(
                               isLoading: state is SigninLoadingState,
                               inverse: true,
-                              label: 'LOGIN',
+                              label: 'SIGNIN',
                               onPressed: () {
                                 if (_formkey.currentState!.validate()) {
                                   BlocProvider.of<SigninBloc>(context).add(

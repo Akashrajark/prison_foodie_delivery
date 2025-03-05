@@ -101,7 +101,7 @@ class _SignupSecondScreenState extends State<SignupSecondScreen> {
                       'Delivery Partner - Signup',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        color: tertiaryColor,
+                        color: onSecondaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -153,7 +153,7 @@ class _SignupSecondScreenState extends State<SignupSecondScreen> {
                       'Add your photo',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        color: tertiaryColor,
+                        color: onSecondaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
@@ -172,7 +172,7 @@ class _SignupSecondScreenState extends State<SignupSecondScreen> {
                       'Add your DL photo',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        color: tertiaryColor,
+                        color: onSecondaryColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
@@ -187,45 +187,39 @@ class _SignupSecondScreenState extends State<SignupSecondScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    SizedBox(
-                      height: 60,
-                      child: CustomButton(
-                        color: secondaryColor,
-                        label: 'Signup',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
-                              profilephoto != null &&
-                              licensefile != null) {
-                            Map<String, dynamic> details = {
-                              'name': widget.signupDetails['name'],
-                              'email': widget.signupDetails['email'],
-                              'password': widget.signupDetails['password'],
-                              'state': _stateController.text.trim(),
-                              'district': _districtController.text.trim(),
-                              'place': _placeController.text.trim(),
-                              'pincode': _pincodeController.text.trim(),
-                              'address_line':
-                                  _addressLineController.text.trim(),
-                              'vehicle_no': _vehicleNoController.text.trim(),
-                            };
-                            if (profilephoto != null) {
-                              details['photo_file'] = profilephoto!;
-                              details['photo_name'] = profilephoto!.path;
-                            }
-                            if (licensefile != null) {
-                              details['license_file'] = licensefile!;
-                              details['license_name'] = licensefile!.path;
-                            }
-                            BlocProvider.of<SignUpBloc>(context).add(
-                              SignUpUserEvent(
-                                email: widget.signupDetails['email'],
-                                password: widget.signupDetails['password'],
-                                userDetails: details,
-                              ),
-                            );
+                    CustomButton(
+                      isLoading: state is SignUpLoadingState,
+                      color: secondaryColor,
+                      label: 'Signup',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            profilephoto != null &&
+                            licensefile != null) {
+                          Map<String, dynamic> details = {
+                            'name': widget.signupDetails['name'],
+                            'email': widget.signupDetails['email'],
+                            'state': _stateController.text.trim(),
+                            'district': _districtController.text.trim(),
+                            'place': _placeController.text.trim(),
+                            'pincode': _pincodeController.text.trim(),
+                            'address_line': _addressLineController.text.trim(),
+                            'vehicle_no': _vehicleNoController.text.trim(),
+                          };
+                          if (profilephoto != null) {
+                            details['photo_file'] = profilephoto!;
+                            details['photo_name'] = profilephoto!.path;
                           }
-                        },
-                      ),
+                          if (licensefile != null) {
+                            details['license_file'] = licensefile!;
+                            details['license_name'] = licensefile!.path;
+                          }
+                          BlocProvider.of<SignUpBloc>(context).add(
+                            InsertUserDataEvent(
+                              userDetails: details,
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 20),
                   ],

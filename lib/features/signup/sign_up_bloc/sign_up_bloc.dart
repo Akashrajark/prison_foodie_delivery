@@ -16,10 +16,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         emit(SignUpLoadingState());
         SupabaseClient supabaseClient = Supabase.instance.client;
         if (event is SignUpUserEvent) {
-          final AuthResponse response = await supabaseClient.auth.signUp(
+          await supabaseClient.auth.signUp(
             email: event.email,
             password: event.password,
           );
+
+          emit(SignUpSuccessState());
+        } else if (event is InsertUserDataEvent) {
+          event.userDetails['user_id'] = supabaseClient.auth.currentUser!.id;
           event.userDetails['image_url'] = await uploadFile(
             'delivery/image',
             event.userDetails['photo_file'],
@@ -36,25 +40,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           event.userDetails.remove('license_file');
           event.userDetails.remove('license_name');
 
-          final String? userId = response.user?.id; // Get user ID
+          await supabaseClient
+              .from('delivery_partners')
+              .insert(event.userDetails);
 
-          if (userId != null) {
-            event.userDetails['user_id'] = userId;
-
-            try {
-              await supabaseClient.from('users').insert(event.userDetails);
-              emit(SignUpSuccessState());
-            } catch (dbError) {
-              Logger().e('Database Insert Error: $dbError');
-              // Delete user since inserting details failed
-              await supabaseClient.auth.admin.deleteUser(userId);
-              emit(SignUpFailureState(
-                  message: 'Sign-up failed due to database error.'));
-            }
-          } else {
-            emit(SignUpFailureState(
-                message: 'Sign-up failed. Please try again.'));
-          }
+          emit(SignUpSuccessState());
         }
       } catch (e, s) {
         Logger().e('$e\n$s');

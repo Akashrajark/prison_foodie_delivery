@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // checkLogin(context);
+    checkLogin(context);
     getOrders();
     super.initState();
   }
